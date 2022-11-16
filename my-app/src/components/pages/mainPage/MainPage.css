@@ -1,0 +1,27 @@
+.main-block{
+    position: absolute;
+    width: 921px;
+    height: 664px;
+    left: 130px;
+    top: 256px;
+}
+.main-block img{
+    width: 775px;
+    height: 778px;
+    left: 1025px;
+    top: 256px;
+    border-radius: 518.5px;
+}
+/* position: absolute; */
+
+
+
+.main-block .text{
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 100px;
+    line-height: 136px;
+
+    color: #000000;
+}
