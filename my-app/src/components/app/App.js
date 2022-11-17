@@ -19,12 +19,10 @@ function App() {
            <main>
                <Suspense fallback = {<Spinner/>}>
                    <Switch>
-                       <Route exact path = "/" component={MainPage} /> 
+                       <Route exact path = "/" component={MainPage}/> 
                        <Route exact path = "/profile" 
                               component={()=>
                               <Profile name = 'Вася Ученик' id = '1' urlPhoto = './user.png'/>}/>
-                        {/* <Route exact path = "/comics" component={}/>
-                       <Route exact path="/comics/:comicId" component={}/> */}
                        <Route path="*">
                            <Page404/>
                        </Route>

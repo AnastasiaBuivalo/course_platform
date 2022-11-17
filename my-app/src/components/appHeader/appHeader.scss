@@ -1,10 +1,11 @@
 //@import '../../style/variables.scss';
 
 .app {
-    background-color:' #12847A';
+    background-color:#12847A;
     &__header {
         display: flex;
         justify-content: space-around;
+        align-items: center;
         img {
             width: 150px;
             height: 150px;
@@ -23,13 +24,20 @@
         ul {
             display: flex;
             justify-content: space-between;
-            font-weight: bold;
-            font-size: 24px;
-            line-height: 32px;
+
             li {
                 margin: 0 8px;
+                border: 2px solid #000000;
+                border-radius: 5px;
+
+                padding: 6px 10px 6px 10px;
+
+                a{
+
+                    color: #000000;
+                }
                 a:hover {
-                    //color: $main-color;
+                    color: #C7AA7F;
                 }
             }
         }
@@ -37,12 +45,13 @@
     &_search-panel{
         margin-top: 30px;
         padding: 25px;
-        background-color: #3d5a80;
-        border-radius: 4px;
         box-shadow: 15px 15px 30px rgba(0, 0, 0, .15);
-        color: #fff;
+
+        border: 2px solid #000000;
+        border-radius: 5px;
     }
     &_search-input{
+
         box-sizing: border-box;
 
         position: absolute;
@@ -51,6 +60,7 @@
         left: calc(50% - 410px/2 - 352px);
         top: calc(50% - 45px/2 - 942.5px);
 
+        background-color:#12847A;
         border: 2px solid #000000;
         border-radius: 5px;
     }
