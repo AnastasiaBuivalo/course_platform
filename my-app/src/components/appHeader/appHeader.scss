@@ -1,9 +1,15 @@
 //@import '../../style/variables.scss';
 
 .app {
+    background-color:' #12847A';
     &__header {
         display: flex;
         justify-content: space-around;
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
     }
     &__title {
         font-weight: bold;
@@ -27,5 +33,25 @@
                 }
             }
         }
+    }
+    &_search-panel{
+        margin-top: 30px;
+        padding: 25px;
+        background-color: #3d5a80;
+        border-radius: 4px;
+        box-shadow: 15px 15px 30px rgba(0, 0, 0, .15);
+        color: #fff;
+    }
+    &_search-input{
+        box-sizing: border-box;
+
+        position: absolute;
+        width: 410px;
+        height: 45px;
+        left: calc(50% - 410px/2 - 352px);
+        top: calc(50% - 45px/2 - 942.5px);
+
+        border: 2px solid #000000;
+        border-radius: 5px;
     }
 }

@@ -1,40 +1,19 @@
-import './MainPage.css'
+import {Container} from 'react-bootstrap';
+import './mainPage.scss'
 import banner from './banner.png';
-
-const MainBlock = {
-    position: "absolute",
-    width: "921px",
-    height: "664px",
-    left: "130px",
-    top: "256px",
-}
-
-const MainText = {
-    fontFamily: "Open Sans",
-    fontStyle: "normal",
-    fontWeight: "400",
-    fontSize: "100px",
-    lineHeight: "136px",
-
-    color: "#000000",
-}
-
-const MainImg = {
-    width: "775px",
-    height: "778px",
-    left: "1025px",
-    top: "256px",
-    borderRadius: "518.5px",
-}
-
+import decoration from './decoration.png'
 
 const MainPage = ()=>{
 
     return(
-        <div style = {MainBlock} className="main_block">
-            <h1 style={MainText} >Освой востребованную профессию</h1>
-            <img  style ={MainImg} src = {banner} alt = 'banner'/>
-        </div>
+        //<Container>
+            <div className="main_container">
+                {/* <Container className = "constainer main_container"> */}
+                    <p className="main_container_text" >Освой востребованную профессию</p>
+                    <img src = {banner} alt = 'banner'/>
+                {/* </Container> */}
+            </div>
+       // </Container>
     )
 }
 
