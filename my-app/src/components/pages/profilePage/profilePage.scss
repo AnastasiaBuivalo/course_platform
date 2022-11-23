@@ -1,0 +1,121 @@
+.profile{
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    width: 100%;
+    height: 1250px;
+    // left: 130px;
+    // top: 256px;
+    // padding-top: 50px;
+    // padding-right:calc(50% - 410px/2 - 352px);
+    // padding-left: calc(50% - 410px/2 - 352px);
+    background-color:#12847A;
+    &_menu{
+        box-sizing: border-box;
+
+        //position: absolute;
+        width: 688px;
+        height: 714px;
+       // left: 120px;
+        //top: 241px;
+
+        background: #C7AA7F;
+        border: 1px solid #000000;
+        border-radius: 5px;
+
+        &_header{
+            //position: absolute;
+            display: flex;
+            justify-content: left;
+            align-items:center;
+            width: 688px;
+            //height: 220px;
+            //left: 120px;
+            //top: 240px;
+
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 24px;
+
+            color: #000000;
+            border: 2px solid #000000;
+            border-radius: 5px;
+            img{
+                //position: absolute;
+                width: 200px;
+                height: 200px;
+                //left: 141px;
+                //top: 253px;
+
+                //background: url(202___white_short_haired_dog_as_a_superhero_d_46647592-78e8-4f9f-8234-b710b3ab1f54-2);
+                //filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+                border-radius: 267px;
+            }
+
+        }
+        ul{
+            //position: absolute;
+            width: 686px;
+            //height: 499px;
+            padding-left: 0;
+            margin-bottom: 0;
+            //left: 120px;
+            //top: 456px;
+            button{
+                display: flex;
+                align-items:center;
+                width: 688px;
+                height: 100px;
+                background: #C7AA7F;
+                //left: 120px;
+                //top: 559px;
+
+                font-family: 'Inter';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 24px;
+                display: flex;
+                //align-items: center;
+
+                color: #000000;
+
+                border: 2px solid #000000;
+                border-radius: 5px;
+            }
+        }
+    }
+    &_decoration{
+        img{
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            left: 900px;
+            top: 700px;
+        }
+    }
+
+    &_current_screen{
+        box-sizing: border-box;
+
+        //position: absolute;
+        width: 688px;
+        height: 714px;
+        left: 120px;
+        top: 241px;
+
+        background: #C7AA7F;
+        border: 1px solid #000000;
+        border-radius: 5px;
+
+    }
+
+    &_content{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+}

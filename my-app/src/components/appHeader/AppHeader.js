@@ -32,6 +32,10 @@ const AppHeader = () => {
                             <NavLink exact to= "/profile" activeStyle={{'color':'#C7AA7F'}}>Профиль         
                             </NavLink>
                         </li>
+                        <li type = 'none'> 
+                            <NavLink exact to= "/login" activeStyle={{'color':'#C7AA7F'}}>Log in         
+                            </NavLink>
+                        </li>
                     </ul>
                 </nav>
             </header>
