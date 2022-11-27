@@ -112,6 +112,9 @@
         display:flex;
         flex-flow: column nowrap;
         align-items:center;
+        &_registration{
+            width: 200px;
+        }
         // justify-content: center;
         // align-items
     }

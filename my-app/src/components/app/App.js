@@ -11,6 +11,8 @@ const Page404 = lazy(()=>import('../pages/404'));
 const MainPage = lazy(()=>import('../pages/mainPage/MainPage'));
 const Profile = lazy(()=>import('../pages/profilePage/ProfilePage'));
 const FormLogin = lazy(()=>import('../pages/formPage/FormLogin'));
+const FormRegistration = lazy(()=>import('../pages/formPage/FormRegistration'));
+const CoursePage= lazy(()=>import('../pages/cousePage/CoursePage'));
 
 function App() {
   return (
@@ -24,9 +26,16 @@ function App() {
                        <Route exact path = "/profile" 
                               component={()=>
                               <Profile name = 'Вася Ученик' id = '1' urlPhoto = './user.png'/>}/>
+
                         <Route exact path="/login"
                         component={()=>
                         <FormLogin/>}/>
+
+                        <Route exact path="/registration"
+                        component={()=>
+                        <FormRegistration/>}/>
+
+                        <Route exact path = "/course" component={CoursePage}/> 
                        <Route path="*">
                            <Page404/>
                        </Route>

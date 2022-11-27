@@ -1,11 +1,19 @@
 import { Fragment, useState, useMemo } from "react";
+import  CardCours   from '../../cardCours/CardCours'
 import './profilePage.scss'
 import decoration from './decoration.png'
 import user from './user.png'
 
 const Courses = ()=>{
     return(
-        <div className="profile_current_screen">Courses</div>
+        <div className="profile_current_screen">
+            <CardCours 
+            title = 'учим Питон' 
+            description = 'В этом курсе по программированию на языке Python вы познакомитесь с базовыми понятиями программирования. Едва ли возможно научиться программировать без практики, поэтому в качестве домашних заданий вам будет предложено довольно много задач, в которых вы сможете потренировать своё умение программировать.'
+            id ='1'
+            duration = '125 часов'
+        />
+        </div>
     )
 }
 
