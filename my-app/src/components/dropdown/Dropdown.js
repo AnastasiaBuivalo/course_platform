@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from 'react-router-dom';
 import { Container } from "react-bootstrap";
 import './dropdown.scss'
 
@@ -6,7 +7,7 @@ const List = ()=>{
     console.log('list');
     return(
         <ul className="dropdown_list" style={{display:'flex',flexDirection:'column'}}>
-            <button>One</button>
+            <NavLink exact to= "/catalog" activeStyle={{'color':'#C7AA7F'}}><button>Все</button></NavLink>
             <button>Two</button>
             <button>Three</button>
         </ul>

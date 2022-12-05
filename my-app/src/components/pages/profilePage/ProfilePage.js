@@ -56,7 +56,6 @@ const ProfilePage = (props)=>{
                 return <Notification/>;
         }
     }, [idCurrentScreen])
-    console.log(name);
     return(
         <div className="profile">
             <div className="profile_content">

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"; 
-import {lazy, Suspense} from "react"
+import {lazy, Suspense, useState} from "react"
 
 import AppHeader from "../appHeader/AppHeader";
 
@@ -13,8 +13,14 @@ const Profile = lazy(()=>import('../pages/profilePage/ProfilePage'));
 const FormLogin = lazy(()=>import('../pages/formPage/FormLogin'));
 const FormRegistration = lazy(()=>import('../pages/formPage/FormRegistration'));
 const CoursePage= lazy(()=>import('../pages/cousePage/CoursePage'));
+const CourseList= lazy(()=>import('../courseList/CourseList'));
 
 function App() {
+
+    const [selectedCourse, setSelectedCourse] = useState(null);
+    const onCourseSelected = (id) => {
+        setSelectedCourse(id);
+    }
   return (
     <Router>
        <div className="app" >
@@ -34,6 +40,9 @@ function App() {
                         <Route exact path="/registration"
                         component={()=>
                         <FormRegistration/>}/>
+
+                        <Route exact path="/catalog"
+                        component={()=><CourseList selectedId = {selectedCourse} onCorseSelected = {onCourseSelected} />}/>
 
                         <Route exact path = "/course" component={CoursePage}/> 
                        <Route path="*">
