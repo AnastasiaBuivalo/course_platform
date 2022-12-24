@@ -15,6 +15,8 @@ const FormRegistration = lazy(()=>import('../pages/formPage/FormRegistration'));
 const CoursePage= lazy(()=>import('../pages/cousePage/CoursePage'));
 const CourseList= lazy(()=>import('../courseList/CourseList'));
 
+
+
 function App() {
 
     const [selectedCourse, setSelectedCourse] = useState(null);
@@ -29,7 +31,7 @@ function App() {
                <Suspense fallback = {<Spinner/>}>
                    <Switch>
                        <Route exact path = "/" component={MainPage}/> 
-                       <Route exact path = "/profile" 
+                       <Route exact path = "/profile:user_id" 
                               component={()=>
                               <Profile name = 'Вася Ученик' id = '1' urlPhoto = './user.png'/>}/>
 

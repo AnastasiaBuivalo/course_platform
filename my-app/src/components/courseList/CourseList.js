@@ -1,4 +1,5 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState, useRef, useCallback } from 'react'
+import { api } from '../../api/api';
 import PropTypes from 'prop-types'
 //import useMarvelService from '../../services/MarvelService'
 import ErrorMessage from '../errorMessage/ErrorMessage'
@@ -9,20 +10,38 @@ import './courseList.scss';
 import '../pages/formPage/forms.scss'
 import logo from '../appHeader/logo512.png'
 
-
-const getAllCourses = (offset)=>{
-    return ([
-        {id:1, name: 'Название', decription: 'Описание', thumbnail: logo, price: 'Цена'},
-        {id:2, name: 'Название', decription: 'Описание', thumbnail: logo, price: 'Цена'},
-        {id:3, name: 'Название', decription: 'Описание', thumbnail: logo, price: 'Цена'}
-    ])
-}
+    // return ([
+    //     {id:1, name: 'Название', decription: 'Описание', thumbnail: logo, price: 'Цена'},
+    //     {id:2, name: 'Название', decription: 'Описание', thumbnail: logo, price: 'Цена'},
+    //     {id:3, name: 'Название', decription: 'Описание', thumbnail: logo, price: 'Цена'}
+    // ])
 
 const CourseList = (props)=>{
-
     const [courseList, setCourseList] = useState([]);
     const [newItemLoading, setNewItemLoading] = useState(false);
-    const [offset, setOffset] = useState(110);
+    const [offset, setOffset] = useState(4);
+
+    // const handlePressQuery = useCallback(offset => {
+    //     setOffset(offset);
+    // }, []);
+
+    const getAllCourses =  useCallback(async () => {
+        console.log('click');
+        // if (selectedQuery) {
+        // @ts-ignore
+        const res = await api['getCourseSQL']({start:offset-3,  end:offset});
+        console.log('Api Response:', res);
+        console.log('Api Response:', res.data.data);
+
+        let isEnd = false;
+        if(res?.data?.data.length < 3)
+            isEnd = true;
+        setCourseList((courseList)=>[...courseList, ...res?.data?.data]);
+        setNewItemLoading(false);
+        setEnded(isEnd);
+        // }
+    }, [offset]);
+
     const [ended, setEnded] = useState(false);
 
     //const {loading, error, getAllCharacters} = useMarvelService();
@@ -37,24 +56,19 @@ const CourseList = (props)=>{
 
     const onRequest = (offset, initial) => {
         setNewItemLoading(!initial);
-        onCourseListLoaded(getAllCourses(offset));
+        getAllCourses(offset)
+        .catch(()=>console.log('Error'));
+        // .then onCourseListLoaded();
+        // onCourseListLoaded(getAllCourses(offset));
 
             //.then(onCharListLoaded)
     }
 
-    const onCourseListLoaded = (newCourseList) => {
-        let isEnd = false;
-        if(newCourseList.length < 9)
-            isEnd = true;
-        setCourseList((courseList)=>[...courseList, ...newCourseList]);
-        setNewItemLoading(false);
-        setOffset((offset)=>offset+9);
-        setEnded(isEnd);
-    }
 
     function renderItems(arr) {
         //console.log(arr);
         const items =  arr.map((item) => {
+            console.log(item);
             let imgStyle = {'objectFit' : 'cover'};
             if (item.thumbnail === 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg') {
                 imgStyle = {'objectFit' : 'unset'};
@@ -66,8 +80,8 @@ const CourseList = (props)=>{
                     key={item.id}
                     onClick={() => props.onCharSelected(item.id)}>
                         <div className='course_name'><img src={item.thumbnail} alt={item.name} style={imgStyle}/></div>
-                        <div className="course_name">{item.name}</div>
-                        <div>{item.decription}</div>
+                        <div className="course_name">{item.title}</div>
+                        <div>{item.descript}</div>
                 </li>
             )
         });
@@ -103,8 +117,10 @@ const CourseList = (props)=>{
                 <button 
                 
                 disabled = {newItemLoading}
-                onClick={()=>{onRequest(offset)}}
-                // style = {{'display': ended ? 'none':'block'}}
+                onClick={()=>{
+                    setOffset(offset+3);
+                    onRequest(offset)}}
+                style = {{'display': ended ? 'none':'block'}}
                 >
                     <div className="inner">load more</div>
                 </button>
