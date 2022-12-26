@@ -1,9 +1,10 @@
 import { ModalTitle } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import './cardCours.scss'
 
 const CardCours = (props)=>{
-    const {title, description, duration, id} = props;
+    const {title, description, duration, id, course} = props;
+    const navigate = useHistory();
     return(
         <div className='mini_card'>
             <div className='header'>
@@ -12,7 +13,10 @@ const CardCours = (props)=>{
             </div>
 
             <p>{`${description.slice(0, 210)}...`}</p>
-            <NavLink className='mini_card_right' exact to = '/course'> <button>Подробнее</button></NavLink>
+           
+            {/* <NavLink className='mini_card_right' exact to = '/course'> */}
+            <div className='mini_card_right'> <button onClick={()=> navigate.push(`/course:${course['id']}`)}>Подробнее</button></div> 
+                 {/* </NavLink> */}
         </div>
     )
 }

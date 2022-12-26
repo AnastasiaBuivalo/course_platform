@@ -5,8 +5,10 @@ import * as yup from 'yup'
 import {api} from '../../../api/api'
 
 import './forms.scss'
+
 //имя фамилия, фото, дата рождения
-const FormRegistration=()=>{
+const FormRegistration=(props)=>{
+    const {userId, setUserId} = props;
     const navigate = useHistory();
     const formik = useFormik({
         initialValues:{
@@ -16,7 +18,9 @@ const FormRegistration=()=>{
             terms:false,
             role:'',
             name:'',
-            text:''
+            text:'', 
+            experience:'', 
+            speciality:''
         },
         onSubmit: values=>{
             console.log(JSON.stringify(values, null, 2))
@@ -49,9 +53,15 @@ const FormRegistration=()=>{
             if( res.data.data[0]['count(password)'] === '1')
                 alert('Эта почта уже используется');
             else{
-                await api['postRegistrationStudent']({fcs:formik.values.name, email:formik.values.email, password:formik.values.password, information:formik.values.text});
-                console.log('Api Response:', res);
-                console.log('Api Response:',  res.data.data[0]['count(password)']);
+                await api['postRegistrationUser']({role:formik.values.role, email:formik.values.email, password:formik.values.password});
+                const user_id = await api['getUserIdSQL']({email:formik.values.email});
+                if (formik.values.role == 'Ученик'){
+                    await api['postRegistrationStudent']({fcs:formik.values.name, information:formik.values.text, user_id: user_id.data.data[0]['id']});
+                }
+                else{
+                    await api['postRegistrationLecturer']({fcs:formik.values.name, information:formik.values.text,  speciality:formik.values.speciality, experience:formik.values.experience, user_id: user_id.data.data[0]['id']});
+                }
+                setUserId(user_id.data.data[0]['id']);
                 navigate.push(`/profile:${formik.values.email}`);
             }
         }
@@ -120,8 +130,8 @@ const FormRegistration=()=>{
                 as="select"
                 >
                     <option value="">Выберите роль</option>
-                    <option value="USD">Ученик</option>
-                    <option value="UAH">Преподаватель</option>
+                    <option value="Ученик">Ученик</option>
+                    <option value="Преподаватель">Преподаватель</option>
             </Field>
             {formik.errors.role && formik.touched.role? <div className='error'>{formik.errors.role}</div>:null}
            {/* // <ErrorMessage component="div" className="error" name="currency"/> */}
@@ -135,8 +145,26 @@ const FormRegistration=()=>{
                 onBlur={formik.handleBlur}
             />
             {/* {/* <ErrorMessage component="div" className="error" name="text"/> */}
-
-
+            {formik.values.role === 'Преподаватель'? <div>
+                <label htmlFor="text">Специальность</label>
+                <Field 
+                    id="speciality"
+                    name="speciality"
+                    as="textarea"
+                    value={formik.speciality}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+                <label htmlFor="text">Опыт</label>
+                <Field 
+                    id="experience"
+                    name="experience"
+                    as="textarea"
+                    value={formik.experience}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                />
+            </div> :null}
             <label className="checkbox">
                 <input name="terms" type="checkbox" 
                 value={formik.values.checkbox}

@@ -32,10 +32,16 @@
 
                 padding: 6px 10px 6px 10px;
 
+                button{
+                    color: #000000;
+                }
                 a{
                     //color:aliceblue;
 
                     color: #000000;
+                }
+                a:active{
+                    color:#C7AA7F;
                 }
                 a:hover {
                     color: #C7AA7F;

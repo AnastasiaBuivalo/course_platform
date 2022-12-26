@@ -8,7 +8,8 @@ import {api} from '../../../api/api'
 import './forms.scss'
 
 
-const FormLogin=()=>{
+const FormLogin=(props)=>{
+    let {userId, setUserId} = props;
     const [error, setError] = useState(false);
     const navigate = useHistory();
     const LogIn = async (email, password) => {
@@ -17,12 +18,15 @@ const FormLogin=()=>{
             console.log('login');
             // if (selectedQuery) {
             // @ts-ignore
-            const res = await api['getLogInProfileSQL']({email:email,  password:password});
+            let res = await api['getLogInProfileSQL']({email:email,  password:password});
             console.log('Api Response:', res);
             console.log('Api Response:', res.data.data[0]['count(password)']);
             if(res.data.data[0]['count(password)'] != '0'){
-                console.log('вход');
-                navigate.push(`/profile:${formik.values.email}`);
+                res = await api['getUserIdSQL']({email:email});
+                console.log(res.data.data[0]['id']);
+                setUserId(res.data.data[0]['id']);
+                userId = res.data.data[0]['id'];
+                navigate.push(`/profile:${userId}`);
             }
             else{
                 console.log('неверно');

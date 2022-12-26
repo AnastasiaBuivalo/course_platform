@@ -11,10 +11,13 @@ const sauce = create({
 const api = {
   sauce,
 
-  getMyCourseSQL: function(){
-    return sauce.get<RowData[]>('/main/queries/getMyCourseSQL', {student_id:1});
+  getMyCourseSQL: function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getMyCourseSQL', data);
   },
 
+  getCoursesSQL:function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getCoursesSQL', data);
+  },
   getCourseSQL:function(data:any){
     return sauce.get<RowData[]>('/main/queries/getCourseSQL', data);
   },
@@ -26,16 +29,26 @@ const api = {
     return sauce.get<RowData[]>('/main/queries/getIsRegistrationSQL', data);
   },
 
+  getUserIdSQL:function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getUserIdSQL', data);
+  },
+  getMyRoleSQL:function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getMyRoleSQL', data);
+  },
+  getStudentIdSQL:function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getStudentIdSQL', data);
+  },
+
   postRegistrationStudent: function(data:any){
     return sauce.post<RowData[]>('/main/queries/postRegistrationStudent', data);
   },
 
-  postRegistrationLecturer:function(){
-    return sauce.post<RowData[]>('/main/queries/postRegistrationLecturer', {fcs:'a', email:'a', password:'a', information:'a', speciality:'a', experience:'a' });
+  postRegistrationLecturer:function(data:any){
+    return sauce.post<RowData[]>('/main/queries/postRegistrationLecturer', data);
   },
  
-  postRegistrationUser:function(){
-    return sauce.post<RowData[]>('/main/queries/postRegistrationUser', {role:'a', student_id:'0', lecturer_id:'1'});
+  postRegistrationUser:function(data:any){
+    return sauce.post<RowData[]>('/main/queries/postRegistrationUser', data);
   },
 
   postCourse:function(){

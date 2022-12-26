@@ -1,5 +1,6 @@
 import {useEffect, useState, useRef, useCallback } from 'react'
 import { api } from '../../api/api';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types'
 //import useMarvelService from '../../services/MarvelService'
 import ErrorMessage from '../errorMessage/ErrorMessage'
@@ -29,7 +30,7 @@ const CourseList = (props)=>{
         console.log('click');
         // if (selectedQuery) {
         // @ts-ignore
-        const res = await api['getCourseSQL']({start:offset-3,  end:offset});
+        const res = await api['getCoursesSQL']({start:offset-3,  end:offset});
         console.log('Api Response:', res);
         console.log('Api Response:', res.data.data);
 
@@ -64,7 +65,10 @@ const CourseList = (props)=>{
             //.then(onCharListLoaded)
     }
 
-
+    // const onCharSelected = (id)=>{
+    //     navigate.push(`/course:${id}`)}
+    // }
+    const navigate = useHistory();
     function renderItems(arr) {
         //console.log(arr);
         const items =  arr.map((item) => {
@@ -78,7 +82,8 @@ const CourseList = (props)=>{
                 <li 
                     className= {classItem}
                     key={item.id}
-                    onClick={() => props.onCharSelected(item.id)}>
+                    // onClick={() => props.onCharSelected(item.id)}>
+                    onClick={() => navigate.push(`/course:${item.id}`)}>
                         <div className='course_name'><img src={item.thumbnail} alt={item.name} style={imgStyle}/></div>
                         <div className="course_name">{item.title}</div>
                         <div>{item.descript}</div>

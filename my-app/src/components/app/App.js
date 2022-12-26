@@ -23,30 +23,31 @@ function App() {
     const onCourseSelected = (id) => {
         setSelectedCourse(id);
     }
+    let [userId, setUserId] = useState();
   return (
     <Router>
        <div className="app" >
-           <AppHeader/>
-           <main>
+           <AppHeader userId = {userId} setUserId={setUserId}/>
+           <main style = {{paddingBottom: '55px'}}>
                <Suspense fallback = {<Spinner/>}>
                    <Switch>
                        <Route exact path = "/" component={MainPage}/> 
                        <Route exact path = "/profile:user_id" 
                               component={()=>
-                              <Profile name = 'Вася Ученик' id = '1' urlPhoto = './user.png'/>}/>
+                              <Profile name = 'Вася Ученик' userId = {userId} setUserId = {setUserId} urlPhoto = './user.png'/>}/>
 
                         <Route exact path="/login"
                         component={()=>
-                        <FormLogin/>}/>
+                        <FormLogin userId = {userId} setUserId = {setUserId}/>}/>
 
                         <Route exact path="/registration"
                         component={()=>
-                        <FormRegistration/>}/>
+                        <FormRegistration userId = {userId} setUserId = {setUserId}/>}/>
 
                         <Route exact path="/catalog"
                         component={()=><CourseList selectedId = {selectedCourse} onCorseSelected = {onCourseSelected} />}/>
 
-                        <Route exact path = "/course" component={CoursePage}/> 
+                        <Route exact path = "/course:course_id" component={CoursePage}/> 
                        <Route path="*">
                            <Page404/>
                        </Route>
