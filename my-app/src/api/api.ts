@@ -19,6 +19,9 @@ const api = {
     return sauce.get<RowData[]>('/main/queries/getMyCreateCourseSQL', data);
   },
 
+  getCourseIdSQL:function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getCourseIdSQL', data);
+  },
 
   getCoursesSQL:function(data:any){
     return sauce.get<RowData[]>('/main/queries/getCoursesSQL', data);
@@ -72,16 +75,16 @@ const api = {
     return sauce.post<RowData[]>('/main/queries/postRegistrationUser', data);
   },
 
-  postCourse:function(){
-    return sauce.post<RowData[]>('/main/queries/postCourse', {title:'a', descript:'a'});
+  postCourse:function(data:any){
+    return sauce.post<RowData[]>('/main/queries/postCourse', data);
   },
 
   postStudentCourse:function(){
     return sauce.post<RowData[]>('/main/queries/postStudentCourse', {student_id:'3', course_id:'1'});
   },
 
-  postLecturerCourse:function(){
-    return sauce.post<RowData[]>('/main/queries/postLecturerCourse', {lecturer_id:'1', course_id:'1'});
+  postLecturerCourse:function(data:any){
+    return sauce.post<RowData[]>('/main/queries/postLecturerCourse', data);
   },
 
   updateStudent:function(data:any){

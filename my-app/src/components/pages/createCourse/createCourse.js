@@ -4,23 +4,19 @@ import * as yup from 'yup'
 
 import {api} from '../../../api/api'
 
-import './forms.scss'
+import '../formPage/forms.scss'
 
 //имя фамилия, фото, дата рождения
-const FormRegistration=(props)=>{
-    const {lectorId} = props;
+const CreateCourse=(props)=>{
+    const {userId} = props;
     const navigate = useHistory();
     const formik = useFormik({
         initialValues:{
-            email:'',
-            password:'',
-            repeat_password : '',
-            terms:false,
-            role:'',
             name:'',
-            text:'', 
-            experience:'', 
-            speciality:''
+            duration:'', 
+            price:'',
+            description:''
+
         },
         onSubmit: values=>{
             console.log(JSON.stringify(values, null, 2))
@@ -28,57 +24,36 @@ const FormRegistration=(props)=>{
         validationSchema: yup.object({
             name:  yup.string()
                         .required('обзятельное поле'),
-            email: yup.string()
-                        .email('неправильный')
-                        .required('обзятельное поле'),
-            password: yup.string()
-                        .min(8, 'Минимум 8 символов')
-                        .required('обзятельное поле'),
-            role: yup.string()
-                      .required('роль не выбрана'),
-            terms: yup.boolean()
-                        .required('Необходимо согласие')
-                        .oneOf([true], "Необходимо согласие")
+            duration:  yup.string()
+            .required('обзятельное поле'),
 
+            price:  yup.string()
+            .required('обзятельное поле'),
         })
     });
 
-    const onRegistration = async () => {
+
+    const onCreate = async()=>{
         if(Object.keys(formik.errors).length == 0){
-            console.log(formik.errors);
             // @ts-ignore
-            const res = await api['getIsRegistrationSQL']({email:formik.values.email});
-            console.log('Api Response:', res);
-            console.log('Api Response:',  res.data.data[0]['count(password)']);
-            if( res.data.data[0]['count(password)'] === '1')
-                alert('Эта почта уже используется');
-            else{
-                await api['postRegistrationUser']({role:formik.values.role, email:formik.values.email, password:formik.values.password});
-                const user_id = await api['getUserIdSQL']({email:formik.values.email});
-                if (formik.values.role == 'Ученик'){
-                    await api['postRegistrationStudent']({fcs:formik.values.name, information:formik.values.text, user_id: user_id.data.data[0]['id']});
-                }
-                else{
-                    await api['postRegistrationLecturer']({fcs:formik.values.name, information:formik.values.text,  speciality:formik.values.speciality, experience:formik.values.experience, user_id: user_id.data.data[0]['id']});
-                }
-                setUserId(user_id.data.data[0]['id']);
-                navigate.push(`/profile:${formik.values.email}`);
-            }
+            const lector_id = await api['getLecturerIdSQL']({user_id:userId});
+            const res = await api['postCourse']({title:formik.values.name, descript: formik.values.description, price:formik.values.price, duration:formik.values.duration, lecturer_id:lector_id?.data?.data[0]['id']});
+            const courseId =  await api['getCourseIdSQL']({title:formik.values.name});
+            const lect = await api['postLecturerCourse']({lecturer_id:lector_id?.data?.data[0]['id'], course_id: courseId?.data?.data[0]['id']});
+            console.log(res.data.data);
+            navigate.push(`/profile:${userId}`);
         }
         else{
             console.log(formik.errors);
-            alert('Допущены ошибки при заполнении формы регистрации')
+            alert('Допущены ошибка при заполнении');
         }
-        //getIsRegistrationSQL
-
     }
-
 
     return(
         <FormikProvider value={formik}>
         <div className="form" onSubmit={formik.handleChange}>
             <h2>Курс</h2>
-            <label htmlFor="name">Название</label>
+            <label htmlFor="text">Название</label>
             <input
                 id="name"
                 name="name"
@@ -89,29 +64,58 @@ const FormRegistration=(props)=>{
             />
             {formik.errors.name && formik.touched.name? <div className='error' style={{color:'red'}}>{formik.errors.name}</div>:null}
 
-
-
             <label htmlFor="text">Выберите фото для обложки курса: </label>
             <input type="file" name="AddImage" id="AddImage" accept="image/*" placeholder='фото профиля' />
 
-            <label htmlFor="role">Статус аккаунта</label> 
-           
             <label htmlFor="text">Описание</label>
             <Field 
-                id="text"
-                name="text"
+                id="description"
+                name="description"
                 as="textarea"
-                value={formik.text}
+                value={formik.description}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
             />
 
+
+            <label htmlFor="text">Длительность</label>
+            <input
+                id="duration"
+                name="duration"
+                type="text"
+                value={formik.values.duration}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+            />
+            {formik.errors.duration && formik.touched.duration? <div className='error' style={{color:'red'}}>{formik.errors.duration}</div>:null}
+
+            <label htmlFor="text">Цена</label>
+            <input
+                id="name"
+                name="price"
+                type="text"
+                value={formik.values.price}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+            />
+            {formik.errors.price && formik.touched.price? <div className='error' style={{color:'red'}}>{formik.errors.price}</div>:null}
+            {/* <label htmlFor="text">Стоимость</label>
+            <input
+                id="text"
+                name="price"
+                type="text"
+                value={formik.values.price}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+            />
+            {formik.error.price && formik.touched.price? <div className='error' style={{color:'red'}}>{formik.errors.price}</div>:null} */}
+
            <div className='btns'>
-                <button type="submit" className='btns_registration' onClick={onRegistration}>Зарегестрироваться</button>
+                <button type="submit" className='btns_registration' onClick={onCreate}>Создать</button>
             </div>
         </div>
         </FormikProvider>
     )
 }
 
-export default FormRegistration;
+export default CreateCourse;

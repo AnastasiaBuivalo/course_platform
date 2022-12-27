@@ -10,19 +10,7 @@ import './profilePage.scss'
 import decoration from './decoration.png'
 import user from './user.png'
 
-// let courses;
-// const res = await api['getMyRoleSQL']({user_id:user_id});
-// setRole(res?.data?.data[0]['role']);
-// if(res?.data?.data[0]['role'] == 'Ученик'){
-//     const student = await api['getStudentIdSQL']({user_id:user_id});//нужно id  студента чтобы перейти к другой таблице
-//     setStudentId(student?.data?.data[0]['id']);
-//     courses =  await api['getMyCourseSQL']({student_id:student?.data?.data[0]['id']});//массив id курсов этого студента
-// }
-// else{
-//     const lector = await api['getLecturerIdSQL']({user_id:user_id});//нужно id  преподавателя чтобы перейти к другой таблице
-//     setLectorId(lector?.data?.data[0]['id']);
-//     courses =  await api['getMyCreateCourseSQL']({lecturer_id:lector?.data?.data[0]['id']});//массив id курсов этого преподавтеля
-// }
+
 const getCourses = async (setCourses, role, studentId, lectorId) => {
     let courses;
     if(studentId||lectorId){
@@ -73,7 +61,7 @@ const getUser = async (user_id, setStudent, setLector, setRole, setStudentId, se
 
 const Courses = (props)=>{
     const {role, studentId, lectorId} = props;
-    let items = [];
+
     const [courses, setCourses] = useState();
     useEffect(()=>{
         const res = getCourses(setCourses, role, studentId, lectorId);
@@ -81,7 +69,7 @@ const Courses = (props)=>{
 
     return(
         <div className="profile_current_screen">
-        {role == 'Преподаватель'? <button>Создать курс</button>:null}
+        {role == 'Преподаватель'? <button><NavLink exact to = "/createCourse">Создать курс</NavLink></button>:null}
         {role?(courses && courses.map(course=>{
             return(
                 <div key = {course['id']}>

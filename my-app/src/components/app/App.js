@@ -14,6 +14,7 @@ const FormLogin = lazy(()=>import('../pages/formPage/FormLogin'));
 const FormRegistration = lazy(()=>import('../pages/formPage/FormRegistration'));
 const CoursePage= lazy(()=>import('../pages/cousePage/CoursePage'));
 const CourseList= lazy(()=>import('../courseList/CourseList'));
+const CreateCourse = lazy(()=>import('../pages/createCourse/createCourse'));
 
 
 
@@ -48,6 +49,11 @@ function App() {
                         component={()=><CourseList selectedId = {selectedCourse} onCorseSelected = {onCourseSelected} />}/>
 
                         <Route exact path = "/course:course_id" component={CoursePage}/> 
+
+                        <Route exact path="/createCourse"
+                        component={()=>
+                        <CreateCourse userId = {userId} setUserId = {setUserId}/>}/>
+
                        <Route path="*">
                            <Page404/>
                        </Route>
