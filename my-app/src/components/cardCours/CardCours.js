@@ -15,7 +15,7 @@ const CardCours = (props)=>{
             <p>{`${description.slice(0, 210)}...`}</p>
            
             {/* <NavLink className='mini_card_right' exact to = '/course'> */}
-            <div className='mini_card_right'> <button onClick={()=> navigate.push(`/course:${course['id']}`)}>Подробнее</button></div> 
+            <div className='mini_card_btns'> <button>Перейти к урокам</button><button onClick={()=> navigate.push(`/course:${course['id']}`)}>Подробнее</button></div> 
                  {/* </NavLink> */}
         </div>
     )

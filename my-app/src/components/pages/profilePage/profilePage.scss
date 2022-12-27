@@ -10,11 +10,12 @@
     // padding-right:calc(50% - 410px/2 - 352px);
     // padding-left: calc(50% - 410px/2 - 352px);
     background-color:#12847A;
+    //z-index: -2;
     &_menu{
         box-sizing: border-box;
 
         //position: absolute;
-        width: 500px;
+        //width: 500px;
         height: 714px;
        // left: 120px;
         //top: 241px;
@@ -28,7 +29,7 @@
             display: flex;
             justify-content: left;
             align-items:center;
-            width: 688px;
+            width: 500px;
             //height: 220px;
             //left: 120px;
             //top: 240px;
@@ -57,7 +58,7 @@
         }
         ul{
             //position: absolute;
-            width: 686px;
+            //width: 686px;
             //height: 499px;
             padding-left: 0;
             margin-bottom: 0;
@@ -66,7 +67,7 @@
             button{
                 display: flex;
                 align-items:center;
-                width: 688px;
+                width: 500px;
                 height: 100px;
                 background: #C7AA7F;
                 //left: 120px;
@@ -92,8 +93,9 @@
             position: absolute;
             width: 800px;
             height: 800px;
-            left: 900px;
-            top: 700px;
+            left: 700px;
+            top: 500px;
+          //  z-index: -1;
         }
     }
 

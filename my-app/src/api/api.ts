@@ -15,6 +15,11 @@ const api = {
     return sauce.get<RowData[]>('/main/queries/getMyCourseSQL', data);
   },
 
+  getMyCreateCourseSQL:function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getMyCreateCourseSQL', data);
+  },
+
+
   getCoursesSQL:function(data:any){
     return sauce.get<RowData[]>('/main/queries/getCoursesSQL', data);
   },
@@ -29,6 +34,14 @@ const api = {
     return sauce.get<RowData[]>('/main/queries/getIsRegistrationSQL', data);
   },
 
+  getStudent:  function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getStudent', data);
+  },
+
+  getLecturer:  function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getLecturer', data);
+  },
+
   getUserIdSQL:function(data:any){
     return sauce.get<RowData[]>('/main/queries/getUserIdSQL', data);
   },
@@ -37,6 +50,10 @@ const api = {
   },
   getStudentIdSQL:function(data:any){
     return sauce.get<RowData[]>('/main/queries/getStudentIdSQL', data);
+  },
+
+  getLecturerIdSQL:function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getLecturerIdSQL', data);
   },
 
   postRegistrationStudent: function(data:any){

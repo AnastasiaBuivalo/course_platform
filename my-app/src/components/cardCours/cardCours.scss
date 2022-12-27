@@ -5,9 +5,9 @@
     padding-left: 35px;
     padding: 35px 35px 0px 35px;
 
-    &_right{
+    &_btns{
         display: flex;
-        justify-content: end;
+        justify-content: space-around;
     }
     a{
         text-decoration: none;

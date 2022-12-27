@@ -35,7 +35,7 @@ const CoursePage = (props)=>{
 //             // и на момент вызова там была пустая строка
 //  }, 5000);
     // }, []);
-    useEffect(()=>getCourse(course_id[1], setCourse), []);
+    useEffect(()=>{getCourse(course_id[1], setCourse)}, []);
     //         setTimeout(() => {
 //             console.log(course); // здесь старое значение, потому что функция вызвалась только один раз
 //             // и на момент вызова там была пустая строка

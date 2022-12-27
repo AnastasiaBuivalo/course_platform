@@ -4,40 +4,84 @@ import { NavLink, useHistory } from 'react-router-dom'
 import {api} from '../../../api/api'
 
 import  CardCours   from '../../cardCours/CardCours'
+import EditProfile from './EditProfile'
+
 import './profilePage.scss'
 import decoration from './decoration.png'
 import user from './user.png'
 
-const getCourses = async (user_id, setCourses, setRole) => {
+// let courses;
+// const res = await api['getMyRoleSQL']({user_id:user_id});
+// setRole(res?.data?.data[0]['role']);
+// if(res?.data?.data[0]['role'] == 'Ученик'){
+//     const student = await api['getStudentIdSQL']({user_id:user_id});//нужно id  студента чтобы перейти к другой таблице
+//     setStudentId(student?.data?.data[0]['id']);
+//     courses =  await api['getMyCourseSQL']({student_id:student?.data?.data[0]['id']});//массив id курсов этого студента
+// }
+// else{
+//     const lector = await api['getLecturerIdSQL']({user_id:user_id});//нужно id  преподавателя чтобы перейти к другой таблице
+//     setLectorId(lector?.data?.data[0]['id']);
+//     courses =  await api['getMyCreateCourseSQL']({lecturer_id:lector?.data?.data[0]['id']});//массив id курсов этого преподавтеля
+// }
+const getCourses = async (setCourses, role, studentId, lectorId) => {
     let courses;
-    const res = await api['getMyRoleSQL']({user_id:user_id});
-    setRole(res?.data?.data[0]['role']);
-    if(res?.data?.data[0]['role'] == 'Ученик'){
-        const student = await api['getStudentIdSQL']({user_id:user_id});//нужно id  студента чтобы перейти к другой таблице
-        courses =  await api['getMyCourseSQL']({student_id:student?.data?.data[0]['id']});//массив id курсов этого студента
+    if(studentId||lectorId){
+        if(role == 'Ученик'){
+            courses =  await api['getMyCourseSQL']({student_id:studentId});//массив id курсов этого студента
+        }
+        else{
+            courses =  await api['getMyCreateCourseSQL']({lecturer_id:lectorId});//массив id курсов этого преподавтеля
+        }
+        setCourses(courses.data.data);
     }
-    else{
-        //то же но с преподом
-    }
-    // console.log('courses.data.data');
-    // console.log(courses.data.data);
-    setCourses(courses.data.data);
+    else console.log('ждем');
 };
 
+const getUser = async (user_id, setStudent, setLector, setRole, setStudentId, setLectorId) => {
+    const res = await api['getMyRoleSQL']({user_id:user_id});
+    //console.log(`role${res?.data?.data[0]['role']}`);
+    setRole(res?.data?.data[0]['role']);
+    if(res?.data?.data[0]['role'] == 'Ученик'){
+        const student_id = await api['getStudentIdSQL']({user_id:user_id});//нужно id  студента чтобы перейти к другой таблице
+        //console.log(`student_id${student_id?.data?.data[0]['id']}`);
+        setStudentId(student_id?.data?.data[0]['id']);
+        const student =  await api['getStudent']({student_id:student_id?.data?.data[0]['id']});
+        // console.log('student.data.data');
+        // console.log(student.data.data[0]);
+        setStudent(student.data.data[0]);
+    }
+    else{
+        const lector_id = await api['getLecturerIdSQL']({user_id:user_id});//нужно id  преподавателя чтобы перейти к другой таблице
+        setLectorId(lector_id?.data?.data[0]['id']);
+        const lector = await api['getLecturer']({lecturer_id:lector_id?.data?.data[0]['id']});
+        setLector(lector.data.data[0]);
+    }
+
+    // console.log('studentId')
+    // console.log(studentId);
+    // let res;
+    // if(studentId){
+    //     res = await api['getStudent']({student_id:studentId});
+    //     setStudent(res.data.data);
+    // }
+    // else{
+    //     res = await api['getLecturer']({lecturer_id:lectorId});
+    //     setLector(res.data.data);
+    // }
+};
 
 const Courses = (props)=>{
-    let {user_id, start, setStart, end, setEnd, getCourses} = props;
+    const {role, studentId, lectorId} = props;
     let items = [];
     const [courses, setCourses] = useState();
-    const [role, setRole] = useState();
     useEffect(()=>{
-        const res = getCourses(user_id, setCourses, setRole)
+        const res = getCourses(setCourses, role, studentId, lectorId);
     }, []);
 
     return(
         <div className="profile_current_screen">
         {role == 'Преподаватель'? <button>Создать курс</button>:null}
-        {courses && courses.map(course=>{
+        {role?(courses && courses.map(course=>{
             return(
                 <div key = {course['id']}>
                 <CardCours course = {course}
@@ -53,7 +97,7 @@ const Courses = (props)=>{
              </div>
             )
 
-        })}
+        })):null}
         </div>
     )
 }
@@ -64,11 +108,14 @@ const WishList = ()=>{
     )
 }
 
-const EditProfile =()=>{
-    return(
-        <div className="profile_current_screen">EditProfile</div>
-    )
-}
+// const EditProfile =(props)=>{
+//     const {role, studentId, lectorId} = props;
+//     return(
+//         <div className="profile_current_screen">
+//             EditProfile
+//         </div>
+//     )
+// }
 
 const Notification =()=>{
     return(
@@ -78,16 +125,26 @@ const Notification =()=>{
 
 const ProfilePage = (props)=>{
     //const [idMenuActive, setIdMenuActive] = useState();
-    const [idCurrentScreen, setCurrentScreen] = useState(1);
+    const [idCurrentScreen, setCurrentScreen] = useState(2);
     let {userId, name, urlPhoto, setUserId} = props;
     const [start, setStart] = useState(0);
     const [end, setEnd] = useState(3);
     const navigate = useHistory();
 
+    const [studentId, setStudentId] = useState();
+    const [student, setStudent] = useState();
+    const [lector, setLector] = useState();
+    const [lectorId, setLectorId] = useState();
+    const [role, setRole] = useState();
+
+    useEffect(()=>{
+        const res = getUser(userId, setStudent, setLector, setRole, setStudentId, setLectorId);
+    }, []);
+
     const CurrentScreen = useMemo(()=>{
         switch (idCurrentScreen){
             case 1:
-                return (<div className="hi"><Courses user_id = {userId} start = {start} setStart = {setStart} end = {end} setEnd={setEnd} getCourses = {getCourses}/>
+                return (<div><Courses role = {role} studentId = {studentId} lectorId={lectorId}/>
                         {/* <button 
                         onClick={()=>{
                             setStart(end);
@@ -108,13 +165,14 @@ const ProfilePage = (props)=>{
                 return <Notification/>;
         }
     }, [idCurrentScreen])
+
     return(
         <div className="profile">
             <div className="profile_content">
                 <div className="profile_menu ">
                     <div className="profile_menu_header">
                         <img src={user}/>
-                        <p>{name}</p>
+                        <p>{student?student['fcs']?student['fcs']:lector['fcs']:null}</p>
                     </div>
                     <ul>
                         <button onClick={()=>  setCurrentScreen(1)}>Мои курсы</button>
@@ -122,7 +180,7 @@ const ProfilePage = (props)=>{
                         <button onClick={()=>  setCurrentScreen(3)}>Редактировать</button>
                         <button onClick={()=>  setCurrentScreen(4)}>Уведомления</button>
                         
-                        <button onClick={()=>{userId=''; navigate.push(`/`)}}>
+                        <button onClick={()=>{setUserId(''); navigate.push(`/`)}}>
                             Выйти
                             {/* <NavLink to= "/" exact style = {{textDecoration: 'none'}} activeStyle={{'color':'#C7AA7F'}}>Выйти</NavLink> */}
                             </button>
@@ -130,11 +188,12 @@ const ProfilePage = (props)=>{
                     </ul>
                 </div>
                 {CurrentScreen}
+                    
+                
             </div>
-    
             <div className = 'profile_decoration'>            
-                <img  src={decoration }/>
-            </div>
+                    <img  src={decoration }/>
+                </div>
         </div>
     )
 
