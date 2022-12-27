@@ -8,7 +8,7 @@ import './forms.scss'
 
 //имя фамилия, фото, дата рождения
 const FormRegistration=(props)=>{
-    const {userId, setUserId} = props;
+    const {lectorId} = props;
     const navigate = useHistory();
     const formik = useFormik({
         initialValues:{
@@ -77,8 +77,8 @@ const FormRegistration=(props)=>{
     return(
         <FormikProvider value={formik}>
         <div className="form" onSubmit={formik.handleChange}>
-            <h2>Регистрация</h2>
-            <label htmlFor="text">Ваше имя</label>
+            <h2>Курс</h2>
+            <label htmlFor="name">Название</label>
             <input
                 id="name"
                 name="name"
@@ -88,54 +88,15 @@ const FormRegistration=(props)=>{
                 onBlur={formik.handleBlur}
             />
             {formik.errors.name && formik.touched.name? <div className='error' style={{color:'red'}}>{formik.errors.name}</div>:null}
-            <label htmlFor="email">Ваша почта</label>
-            <input
-                id="email"
-                name="email"
-                type="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-            />
-            {formik.errors.email && formik.touched.email? <div className='error' style={{color:'red'}}>{formik.errors.email}</div>:null}
-            <label htmlFor="password">Пароль</label>
-            <input
-                id="password"
-                name="password"
-                type="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-            />
 
-            <label htmlFor="password">Повторите пароль</label>
-            <input
-                id="repeat_password"
-                name="repeat_password"
-                type="password"
-                value={formik.repeat_password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-            />              
-            {(formik.repeat_password === formik.values.password) && formik.touched.password? <div className='error'>пароли не совпадают</div>:null}
-            {formik.errors.password && formik.touched.password? <div className='error'>{formik.errors.password}</div>:null}
 
-            <label htmlFor="text">Выберите фото для своего профиля: </label>
+
+            <label htmlFor="text">Выберите фото для обложки курса: </label>
             <input type="file" name="AddImage" id="AddImage" accept="image/*" placeholder='фото профиля' />
 
             <label htmlFor="role">Статус аккаунта</label> 
-            <Field
-                id="role"
-                name="role"
-                as="select"
-                >
-                    <option value="">Выберите роль</option>
-                    <option value="Ученик">Ученик</option>
-                    <option value="Преподаватель">Преподаватель</option>
-            </Field>
-            {formik.errors.role && formik.touched.role? <div className='error'>{formik.errors.role}</div>:null}
-           {/* // <ErrorMessage component="div" className="error" name="currency"/> */}
-            <label htmlFor="text">О себе</label>
+           
+            <label htmlFor="text">Описание</label>
             <Field 
                 id="text"
                 name="text"
@@ -144,36 +105,6 @@ const FormRegistration=(props)=>{
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
             />
-            {/* {/* <ErrorMessage component="div" className="error" name="text"/> */}
-            {formik.values.role === 'Преподаватель'? <div>
-                <label htmlFor="text">Специальность</label>
-                <Field 
-                    id="speciality"
-                    name="speciality"
-                    as="textarea"
-                    value={formik.speciality}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
-                <label htmlFor="text">Опыт</label>
-                <Field 
-                    id="experience"
-                    name="experience"
-                    as="textarea"
-                    value={formik.experience}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                />
-            </div> :null}
-            <label className="checkbox">
-                <input name="terms" type="checkbox" 
-                value={formik.values.checkbox}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}/>
-                Соглашаетесь с политикой конфиденциальности?
-            </label>
-            {formik.errors.terms? <div className='error'>{formik.errors.terms}</div>:null}
-            {/* {formik.errors.checkbox && formik.touched.checkbox? <div className='error'>{formik.errors.checkbox}</div>:null} */}
 
            <div className='btns'>
                 <button type="submit" className='btns_registration' onClick={onRegistration}>Зарегестрироваться</button>

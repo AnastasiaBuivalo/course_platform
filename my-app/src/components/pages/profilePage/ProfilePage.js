@@ -54,6 +54,7 @@ const getUser = async (user_id, setStudent, setLector, setRole, setStudentId, se
         const lector_id = await api['getLecturerIdSQL']({user_id:user_id});//нужно id  преподавателя чтобы перейти к другой таблице
         setLectorId(lector_id?.data?.data[0]['id']);
         const lector = await api['getLecturer']({lecturer_id:lector_id?.data?.data[0]['id']});
+        console.log(lector.data.data);
         setLector(lector.data.data[0]);
     }
 
@@ -159,20 +160,21 @@ const ProfilePage = (props)=>{
                 return <WishList/>;
             case 3:
                 console.log('3');
-                return<EditProfile/>;
+                return<EditProfile role = {role} student = {student} lector = {lector} userId = {userId}/>;
             case 4:
                 console.log('4');
                 return <Notification/>;
         }
     }, [idCurrentScreen])
-
+    const fcs_s = student?student['fcs']?student['fcs']:null:null;
+    const fcs_l = lector?lector['fcs']?lector['fcs']:null:null;
     return(
         <div className="profile">
             <div className="profile_content">
                 <div className="profile_menu ">
                     <div className="profile_menu_header">
                         <img src={user}/>
-                        <p>{student?student['fcs']?student['fcs']:lector['fcs']:null}</p>
+                        <p>{fcs_s||fcs_l}</p>
                     </div>
                     <ul>
                         <button onClick={()=>  setCurrentScreen(1)}>Мои курсы</button>
@@ -191,9 +193,9 @@ const ProfilePage = (props)=>{
                     
                 
             </div>
-            <div className = 'profile_decoration'>            
+            {(idCurrentScreen == 1 || idCurrentScreen == 2) ?(<div className = 'profile_decoration'>            
                     <img  src={decoration }/>
-                </div>
+                </div>): null}
         </div>
     )
 

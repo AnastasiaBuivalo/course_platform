@@ -38,6 +38,10 @@ const api = {
     return sauce.get<RowData[]>('/main/queries/getStudent', data);
   },
 
+  getUser:  function(data:any){
+    return sauce.get<RowData[]>('/main/queries/getUser', data);
+  },
+
   getLecturer:  function(data:any){
     return sauce.get<RowData[]>('/main/queries/getLecturer', data);
   },
@@ -78,6 +82,14 @@ const api = {
 
   postLecturerCourse:function(){
     return sauce.post<RowData[]>('/main/queries/postLecturerCourse', {lecturer_id:'1', course_id:'1'});
+  },
+
+  updateStudent:function(data:any){
+    return sauce.post<RowData[]>('/main/queries/updateStudent', data);
+  },
+
+  updateLecturer:function(data:any){
+    return sauce.post<RowData[]>('/main/queries/updateLecturer', data);
   },
 
 };
