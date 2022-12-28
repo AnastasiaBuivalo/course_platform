@@ -92,7 +92,7 @@ const EditProfile =(props)=>{
                 onBlur={formik.handleBlur}
             />
 
-            {formik.values.role === 'Преподаватель'? <div>
+            {role === 'Преподаватель'? <div>
                 <label htmlFor="text">Специальность</label>
                 <Field 
                     id="speciality"
