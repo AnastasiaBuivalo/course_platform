@@ -93,7 +93,7 @@ const Courses = (props)=>{
 
 const WishList = ()=>{
     return(
-        <div className="profile_current_screen">WishList</div>
+        <div className="profile_current_screen" style={{height:'714px'}}>WishList</div>
     )
 }
 
@@ -108,7 +108,7 @@ const WishList = ()=>{
 
 const Notification =()=>{
     return(
-        <div className="profile_current_screen">Notification</div>
+        <div className="profile_current_screen" style={{height:'714px'}}>Notification</div>
     )
 }
 

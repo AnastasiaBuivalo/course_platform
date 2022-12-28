@@ -56,6 +56,7 @@ const CourseList = (props)=>{
 
 
     const onRequest = (offset, initial) => {
+        setOffset(offset+3);
         setNewItemLoading(!initial);
         getAllCourses(offset)
         .catch(()=>console.log('Error'));
@@ -123,7 +124,6 @@ const CourseList = (props)=>{
                 
                 disabled = {newItemLoading}
                 onClick={()=>{
-                    setOffset(offset+3);
                     onRequest(offset)}}
                 style = {{'display': ended ? 'none':'block'}}
                 >

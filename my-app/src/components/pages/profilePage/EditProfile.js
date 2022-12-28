@@ -62,7 +62,7 @@ const EditProfile =(props)=>{
 
     return(
         <FormikProvider value={formik}>
-            <div className="profile_current_screen">
+            <div className="profile_current_screen" style = {role === 'Ученик'?{height:'714px'}:null}>
         <div className="edit" onSubmit={formik.handleChange}>
             <h2>Редактировать</h2>
             <label htmlFor="email">Ваше имя </label>
